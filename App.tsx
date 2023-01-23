@@ -5,6 +5,7 @@ import {
   Poppins_700Bold,
 } from "@expo-google-fonts/poppins";
 import AppLoading from "expo-app-loading";
+import { StatusBar } from "expo-status-bar";
 import { ThemeProvider } from "styled-components/native";
 
 import theme from "./src/global/styles/theme";
@@ -23,8 +24,11 @@ export default function App() {
   }
 
   return (
-    <ThemeProvider theme={theme}>
-      <Dashboard />
-    </ThemeProvider>
+    <>
+      <StatusBar style="light" />
+      <ThemeProvider theme={theme}>
+        <Dashboard />
+      </ThemeProvider>
+    </>
   );
 }
