@@ -56,14 +56,16 @@ export const User = styled.View`
 
 export const UserGreeting = styled.Text`
   color: ${({ theme }) => theme.colors.shape};
-  font-size: ${RFValue(18)}px;
   font-family: ${({ theme }) => theme.fonts.regular};
-`;
+  font-size: ${RFValue(18)}px;
+  line-height: ${RFValue(24)}px;
+  `;
 
 export const UserName = styled.Text`
   color: ${({ theme }) => theme.colors.shape};
-  font-size: ${RFValue(18)}px;
   font-family: ${({ theme }) => theme.fonts.bold};
+  font-size: ${RFValue(18)}px;
+  line-height: ${RFValue(24)}px;
 `;
 
 export const Icon = styled(Feather)`
