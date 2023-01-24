@@ -28,7 +28,6 @@ interface Props {
 }
 
 export function TransactionCard({ data }: Props) {
-  console.log(data)
   return (
     <Container type={data.type}>
       <Title>{data.title}</Title>
