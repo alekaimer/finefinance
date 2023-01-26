@@ -18,8 +18,7 @@ import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 interface FormData {
-  name: string;
-  amount: string;
+  [key: string]: string;
 }
 
 export function Register() {
@@ -40,7 +39,7 @@ export function Register() {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<FormData>({
     resolver: yupResolver(schema),
   });
 
