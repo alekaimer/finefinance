@@ -22,6 +22,7 @@
     "expo-font": "~11.0.1",
     "expo-splash-screen": "~0.17.5",
     "expo-status-bar": "~1.4.2",
+    "intl": "^1.2.5",
     "react": "18.1.0",
     "react-hook-form": "^7.42.1",
     "react-native": "0.70.5",
