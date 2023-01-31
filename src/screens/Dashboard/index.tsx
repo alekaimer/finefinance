@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 
 import { HighlightCard } from "../../components/HighlightCard";
 import {
@@ -32,7 +32,6 @@ export interface DataListProps extends TransactionCardProps {
 }
 
 export function Dashboard() {
-
   const [data, setData] = useState<DataListProps[]>([]);
 
   function signOut() {}
@@ -68,9 +67,11 @@ export function Dashboard() {
     setData(transactionsFormatted);
   }
 
-  useFocusEffect(() => {
-    loadTransactions();
-  });
+  useFocusEffect(
+    useCallback(() => {
+      loadTransactions();
+    }, [])
+  );
 
   return (
     <Container>
