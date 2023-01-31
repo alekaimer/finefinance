@@ -14,7 +14,7 @@ export const Container = styled.View<TypeProps>`
 
   /* border-left-width: 5px;
   border-left-color: ${({ theme, type }) =>
-    type === "positive" ? theme.colors.success : theme.colors.attention}; */
+    type === "income" ? theme.colors.success : theme.colors.attention}; */
 `;
 
 export const Title = styled.Text`
@@ -27,7 +27,7 @@ export const Amount = styled.Text<TypeProps>`
   font-size: ${RFValue(20)}px;
 
   color: ${({ theme, type }) =>
-    type === "positive" ? theme.colors.success : theme.colors.attention};
+    type === "income" ? theme.colors.success : theme.colors.attention};
 `;
 
 export const Footer = styled.View`

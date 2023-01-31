@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Alert, Keyboard, Modal, TouchableWithoutFeedback } from "react-native";
 import { Button } from "../../components/Form/Button";
@@ -17,18 +17,15 @@ import {
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useFocusEffect } from "@react-navigation/native";
 import uuid from "react-native-uuid";
-// import { useNavigation } from "@react-navigation/native";
-
+import { useNavigation } from "@react-navigation/native";
+import { DATA_KEY } from "../../config/consts"
 interface FormData {
   [key: string]: string;
 }
 
-const dataKey = "@gofinances:transactions";
-
 export function Register() {
-  // const { navigate } = useNavigation();
+  const { navigate } = useNavigation();
 
   const [category, setCategory] = useState({
     key: "category",
@@ -55,7 +52,7 @@ export function Register() {
   const [transactionType, setTransactionType] = useState("");
   const [categoryModalOpen, setCategoryModalOpen] = useState(false);
 
-  function handletransactionsTypesSelect(type: "up" | "down") {
+  function handletransactionsTypesSelect(type: "income" | "outcome") {
     setTransactionType(type);
   }
 
@@ -92,20 +89,23 @@ export function Register() {
       transactionType,
       category: category.key,
       date: new Date(),
+      type: transactionType,
     };
 
     try {
-      const data = await AsyncStorage.getItem(dataKey);
+      const data = await AsyncStorage.getItem(DATA_KEY);
       const currentData = data ? JSON.parse(data) : [];
 
       const dataFormatted = [...currentData, newTransaction];
 
-      await AsyncStorage.setItem(dataKey, JSON.stringify(dataFormatted));
+      await AsyncStorage.setItem(DATA_KEY, JSON.stringify(dataFormatted));
 
       Alert.alert("Transação salva com sucesso");
 
       clearForm();
-      // navigate("Listagem");
+
+      //@ts-ignore
+      navigate("Listagem");
     } catch (error) {
       console.log(error);
       Alert.alert("Não foi possível salvar");
@@ -114,14 +114,14 @@ export function Register() {
 
   // useFocusEffect(() => {
     // async function loadData() {
-    //   const data = await AsyncStorage.getItem(dataKey);
+    //   const data = await AsyncStorage.getItem(DATA_KEY);
     //   console.log("Storage:", JSON.parse(data!));
     // }
     // loadData();
 
     // async function clearData() {
-    //   await AsyncStorage.removeItem(dataKey);
-    //   const currentData = await AsyncStorage.getItem(dataKey);
+    //   await AsyncStorage.removeItem(DATA_KEY);
+    //   const currentData = await AsyncStorage.getItem(DATA_KEY);
     // }
     // clearData();
   // });
@@ -157,13 +157,13 @@ export function Register() {
               <TransactionTypeButton
                 title="Entrada"
                 type="up"
-                onPress={() => handletransactionsTypesSelect("up")}
-                isActive={transactionType === "up"}
+                onPress={() => handletransactionsTypesSelect("income")}
+                isActive={transactionType === "income"}
               />
               <TransactionTypeButton
                 title="Saída"
                 type="down"
-                onPress={() => handletransactionsTypesSelect("down")}
+                onPress={() => handletransactionsTypesSelect("outcome")}
                 isActive={transactionType === "down"}
               />
             </TransactionsTypes>
