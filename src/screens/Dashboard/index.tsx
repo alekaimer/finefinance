@@ -20,8 +20,9 @@ import {
   Transactions,
   Title,
   TransactionList,
+  LogoutButton
 } from "./styles";
-
+ 
 export interface DataListProps extends TransactionCardProps {
   id: string;
 }
@@ -61,7 +62,9 @@ export function Dashboard() {
       },
       date: "27/03/2020",
     },
-  ]
+  ];
+
+  function signOut() {}
 
   return (
     <Container>
@@ -80,7 +83,9 @@ export function Dashboard() {
             </User>
           </UserInfo>
 
-          <Icon name="power" />
+          <LogoutButton onPress={signOut}>
+            <Icon name="power" />
+          </LogoutButton>
         </UserWrapper>
       </Header>
 
