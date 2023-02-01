@@ -4,12 +4,12 @@ import { Feather } from "@expo/vector-icons";
 import { RFValue } from "react-native-responsive-fontsize";
 
 interface IconsProps {
-  type: "up" | "down";
+  type: "income" | "outcome";
 }
 
 interface ContainerProps {
   isActive: boolean;
-  type: "up" | "down";
+  type: "income" | "outcome";
 }
 
 export const Container = styled.TouchableOpacity<ContainerProps>`
@@ -25,14 +25,14 @@ export const Container = styled.TouchableOpacity<ContainerProps>`
 
   ${({ isActive, type, theme }) =>
     isActive &&
-    type === "up" &&
+    type === "income" &&
     css`
       background-color: ${theme.colors.success_light};
       border: none;
     `}
   ${({ isActive, type, theme }) =>
     isActive &&
-    type === "down" &&
+    type === "outcome" &&
     css`
       background-color: ${theme.colors.attention_light};
       border: none;
@@ -44,7 +44,7 @@ export const Icon = styled(Feather)<IconsProps>`
   margin-right: 12px;
 
   color: ${({ theme, type }) =>
-    type === "up" ? theme.colors.success : theme.colors.attention};
+    type === "income" ? theme.colors.success : theme.colors.attention};
 `;
 
 export const Title = styled.Text`
