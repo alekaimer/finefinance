@@ -156,15 +156,15 @@ export function Register() {
             <TransactionsTypes>
               <TransactionTypeButton
                 title="Entrada"
-                type="up"
+                type="income"
                 onPress={() => handletransactionsTypesSelect("income")}
                 isActive={transactionType === "income"}
               />
               <TransactionTypeButton
                 title="Saída"
-                type="down"
+                type="outcome"
                 onPress={() => handletransactionsTypesSelect("outcome")}
-                isActive={transactionType === "down"}
+                isActive={transactionType === "outcome"}
               />
             </TransactionsTypes>
 
