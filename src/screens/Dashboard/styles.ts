@@ -59,7 +59,7 @@ export const UserGreeting = styled.Text`
   font-family: ${({ theme }) => theme.fonts.regular};
   font-size: ${RFValue(18)}px;
   line-height: ${RFValue(24)}px;
-  `;
+`;
 
 export const UserName = styled.Text`
   color: ${({ theme }) => theme.colors.shape};
@@ -104,10 +104,25 @@ export const Title = styled.Text`
 `;
 
 export const TransactionList = styled(
-  FlatList as new (props: FlatListProps<DataListProps>) => FlatList<DataListProps>
+  FlatList as new (
+    props: FlatListProps<DataListProps>
+  ) => FlatList<DataListProps>
 ).attrs({
   showsVerticalScrollIndicator: false,
   contentContainerStyle: {
     paddingBottom: getBottomSpace(),
   },
 })``;
+
+export const LoadContainer = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const EmptyList = styled.Text`
+  font-size: ${RFValue(18)}px;
+  font-family: ${({ theme }) => theme.fonts.regular};
+  margin-top: 16px;
+  text-align: center;
+`;
