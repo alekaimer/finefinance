@@ -100,14 +100,12 @@ export function Register() {
 
       await AsyncStorage.setItem(DATA_KEY, JSON.stringify(dataFormatted));
 
-      Alert.alert("Transação salva com sucesso");
-
       clearForm();
 
       //@ts-ignore
       navigate("Listagem");
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       Alert.alert("Não foi possível salvar");
     }
   }
