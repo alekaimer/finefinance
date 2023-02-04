@@ -28,10 +28,6 @@ export function TransactionCard({ data }: Props) {
     item => item.key === data.category
   );
 
-  useEffect(() => {
-    console.log(JSON.stringify(data));
-  }, []);
-
   return (
     <Container type={data.type}>
       <Title>{data.name}</Title>
