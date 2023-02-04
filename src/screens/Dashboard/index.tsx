@@ -139,7 +139,8 @@ export function Dashboard() {
       }
     );
 
-    setTransactions(transactionsFormatted);
+    const transactionReversed = transactionsFormatted.reverse();
+    setTransactions(transactionReversed);
 
     const lastTransactionEntries = getLastTransactionDateByType(
       transactions,
@@ -204,14 +205,15 @@ export function Dashboard() {
                 </User>
               </UserInfo>
 
-              {SET_CLEAR_DATA_BUTTON && (
+              {SET_CLEAR_DATA_BUTTON ? (
                 <LogoutButton onPress={clearDataStorage}>
                   <Icon name="trash" />
                 </LogoutButton>
+              ) : (
+                <LogoutButton onPress={signOut}>
+                  <Icon name="power" />
+                </LogoutButton>
               )}
-              <LogoutButton onPress={signOut}>
-                <Icon name="power" />
-              </LogoutButton>
             </UserWrapper>
           </Header>
 
