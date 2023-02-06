@@ -1,5 +1,8 @@
 import { createContext, ReactNode, useContext, useState } from "react";
 import * as AuthSession from "expo-auth-session";
+import * as AppleAuthentication from "expo-apple-authentication";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { DATA_KEY } from "../config/consts";
 
 interface AuthProviderProps {
   children: ReactNode;
@@ -15,6 +18,7 @@ interface User {
 interface AuthContextData {
   user: User;
   signInWithGoogle(): Promise<void>;
+  signInWithApple(): Promise<void>;
 }
 
 const AuthContext = createContext({} as AuthContextData);
@@ -42,15 +46,52 @@ function AuthProvider({ children }: AuthProviderProps) {
         );
 
         const userInfo = await userInfoResponse.json();
-
-        console.log(userInfo); //remove this line in production environment
-
-        setUser({
-          id: userInfo.id,
+        
+        const userLogged = {
+          id: String(userInfo.id),
           name: `${userInfo.given_name} ${userInfo.family_name}`,
           email: userInfo.email,
           photo: userInfo.picture,
-        });
+        };
+
+        console.log(userLogged); //remove this line in production environment
+
+        setUser(userLogged);
+
+        await AsyncStorage.setItem(DATA_KEY, JSON.stringify(userLogged));
+      }
+    } catch (error: any) {
+      throw new Error(error);
+    }
+  }
+
+  async function signInWithApple() {
+    try {
+      const credential = await AppleAuthentication.signInAsync({
+        requestedScopes: [
+          AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
+          AppleAuthentication.AppleAuthenticationScope.EMAIL,
+        ],
+      });
+
+      if (credential) {
+        // console.log(credential); //remove this line in production environment
+
+        const name = credential.fullName!.givenName!;
+        // const photo = `https://ui-avatars.com/api/?name=${name}&length=1`;
+
+        const userLogged = {
+          id: String(credential.user),
+          name: credential.fullName!.givenName!,
+          email: credential.email!,
+          photo: undefined,
+        };
+
+        console.log(userLogged); //remove this line in production environment
+
+        setUser(userLogged);
+
+        await AsyncStorage.setItem(DATA_KEY, JSON.stringify(userLogged));
       }
     } catch (error: any) {
       throw new Error(error);
@@ -62,6 +103,7 @@ function AuthProvider({ children }: AuthProviderProps) {
       value={{
         user,
         signInWithGoogle,
+        signInWithApple
       }}
     >
       {children}
