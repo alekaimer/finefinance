@@ -3,7 +3,6 @@ import "react-native-gesture-handler";
 import "intl";
 import "intl/locale-data/jsonp/pt-BR";
 
-
 import {
   useFonts,
   Poppins_400Regular,
@@ -17,6 +16,8 @@ import { ThemeProvider } from "styled-components/native";
 
 import theme from "./src/global/styles/theme";
 import { AppRoutes } from "./src/routes/app.routes";
+import { SignIn } from "./src/screens/SignIn";
+import { AuthProvider } from "./src/hooks/auth";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -34,7 +35,9 @@ export default function App() {
       <StatusBar style="light" />
       <ThemeProvider theme={theme}>
         <NavigationContainer>
-          <AppRoutes />
+          <AuthProvider>
+            <SignIn />
+          </AuthProvider>
         </NavigationContainer>
       </ThemeProvider>
     </>
