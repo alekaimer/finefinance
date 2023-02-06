@@ -8,6 +8,11 @@
     ],
     "ios": {
       "bundleIdentifier": "org.name.gofinance"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "9cf85e3a-05cf-45a0-92ff-1ac25a67456e"
+      }
     }
   }
 }
