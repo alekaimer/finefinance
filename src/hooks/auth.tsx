@@ -1,9 +1,4 @@
-import {
-  createContext,
-  ReactNode,
-  useContext,
-  useState,
-} from "react";
+import { createContext, ReactNode, useContext, useState } from "react";
 import * as AuthSession from "expo-auth-session";
 
 interface AuthProviderProps {
@@ -19,18 +14,19 @@ interface User {
 
 interface AuthContextData {
   user: User;
-  signInWithGoogle(): Promise<void>; 
+  signInWithGoogle(): Promise<void>;
 }
 
 const AuthContext = createContext({} as AuthContextData);
 
 function AuthProvider({ children }: AuthProviderProps) {
+  const { CLIENT_ID } = process.env;
+  const { REDIRECT_URI } = process.env;
+
   const [user, setUser] = useState<User>({} as User);
 
   async function signInWithGoogle() {
     try {
-      const CLIENT_ID = "226896288477-fl5gko03qbvqqafn866brjrm6fbf2bpd.apps.googleusercontent.com";
-      const REDIRECT_URI = "https://auth.expo.io/@alekaimer/gofinance";
       const RESPONSE_TYPE = "token";
       const SCOPE = encodeURI("profile email");
 
@@ -45,7 +41,7 @@ function AuthProvider({ children }: AuthProviderProps) {
           `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${access_token}`
         );
 
-        const userInfo = await userInfoResponse.json(); 
+        const userInfo = await userInfoResponse.json();
 
         console.log(userInfo); //remove this line in production environment
 

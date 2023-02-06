@@ -17,6 +17,7 @@
     "@react-navigation/native": "^6.1.2",
     "@types/react": "~18.0.24",
     "@types/react-native": "~0.70.6",
+    "babel-plugin-inline-dotenv": "^1.7.0",
     "date-fns": "^2.29.3",
     "expo": "~47.0.12",
     "expo-app-loading": "~2.1.1",
