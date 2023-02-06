@@ -6,8 +6,6 @@ import {
   SignInTitle,
   Header,
   Footer,
-  FooterButton,
-  FooterButtonText,
   FooterWrapper,
 } from "./styles";
 
