@@ -105,24 +105,9 @@ export function Register() {
       //@ts-ignore
       navigate("Listagem");
     } catch (error) {
-      // console.log(error);
       Alert.alert("Não foi possível salvar");
     }
   }
-
-  // useFocusEffect(() => {
-    // async function loadData() {
-    //   const data = await AsyncStorage.getItem(DATA_KEY);
-    //   console.log("Storage:", JSON.parse(data!));
-    // }
-    // loadData();
-
-    // async function clearData() {
-    //   await AsyncStorage.removeItem(DATA_KEY);
-    //   const currentData = await AsyncStorage.getItem(DATA_KEY);
-    // }
-    // clearData();
-  // });
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>

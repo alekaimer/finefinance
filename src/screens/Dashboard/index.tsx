@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
 import React, { useCallback, useState } from "react";
-import { ActivityIndicator, Text } from "react-native";
+import { ActivityIndicator, Alert } from "react-native";
 import { useTheme } from "styled-components/native";
 import { HighlightCard } from "../../components/HighlightCard";
 import {
@@ -9,6 +9,7 @@ import {
   TransactionCardProps,
 } from "../../components/TransactionCard";
 import { DATA_KEY, SET_CLEAR_DATA_BUTTON } from "../../config/consts";
+import { useAuth } from "../../hooks/auth";
 import { clearDataStorage } from "../../utils/clearDataStorage";
 import { formatCurrency } from "../../utils/formatCurrency";
 
@@ -49,14 +50,13 @@ interface HighlightData {
 
 export function Dashboard() {
   const theme = useTheme();
+  const { signOut } = useAuth();
 
   const [isLoading, setIsLoading] = useState(true);
   const [transactions, setTransactions] = useState<DataListProps[]>([]);
   const [highlightData, setHighlightData] = useState<HighlightData>(
     {} as HighlightData
   );
-
-  function signOut() {}
 
   function getLastTransactionDateByType(
     collection: DataListProps[],
@@ -176,6 +176,24 @@ export function Dashboard() {
     setIsLoading(false);
   }
 
+  function handleSignOut() {
+    Alert.alert(
+      "Deslogar",
+      "Deseja sair do aplicativo?",
+      [
+        {
+          text: "Não",
+          style: "cancel",
+        },
+        {
+          text: "Sim, Quero sair",
+          onPress: () => signOut(),
+        },
+      ],
+      { cancelable: false }
+    );
+  }
+
   useFocusEffect(
     useCallback(() => {
       loadTransactions();
@@ -210,7 +228,7 @@ export function Dashboard() {
                   <Icon name="trash" />
                 </LogoutButton>
               ) : (
-                <LogoutButton onPress={signOut}>
+                <LogoutButton onPress={handleSignOut}>
                   <Icon name="power" />
                 </LogoutButton>
               )}
@@ -218,7 +236,7 @@ export function Dashboard() {
           </Header>
 
           <HighlightCards>
-            {highlightData.entries.isExist && (
+            {highlightData.entries?.isExist && (
               <HighlightCard
                 type="up"
                 title="Entradas"
@@ -226,7 +244,7 @@ export function Dashboard() {
                 lastTransaction={`Última entrada dia ${highlightData.entries.lastTransaction}`}
               />
             )}
-            {highlightData.expensive.isExist && (
+            {highlightData.expensive?.isExist && (
               <HighlightCard
                 type="down"
                 title="Saídas"
@@ -237,8 +255,10 @@ export function Dashboard() {
             <HighlightCard
               type="total"
               title="Total"
-              amount={highlightData.total.amount}
-              lastTransaction={highlightData.total.lastTransaction}
+              amount={highlightData.total?.amount || formatCurrency(0)}
+              lastTransaction={
+                highlightData.total?.lastTransaction || "Não há transações"
+              }
             />
           </HighlightCards>
 

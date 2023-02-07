@@ -1,8 +1,14 @@
-import { createContext, ReactNode, useContext, useState } from "react";
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import * as AuthSession from "expo-auth-session";
 import * as AppleAuthentication from "expo-apple-authentication";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { DATA_KEY } from "../config/consts";
+import { USER_KEY } from "../config/consts";
 
 interface AuthProviderProps {
   children: ReactNode;
@@ -19,6 +25,7 @@ interface AuthContextData {
   user: User;
   signInWithGoogle(): Promise<void>;
   signInWithApple(): Promise<void>;
+  signOut(): Promise<void>;
 }
 
 const AuthContext = createContext({} as AuthContextData);
@@ -28,6 +35,7 @@ function AuthProvider({ children }: AuthProviderProps) {
   const { REDIRECT_URI } = process.env;
 
   const [user, setUser] = useState<User>({} as User);
+  const [loadingUserStorage, setLoadingUserStorage] = useState(true);
 
   async function signInWithGoogle() {
     try {
@@ -46,7 +54,7 @@ function AuthProvider({ children }: AuthProviderProps) {
         );
 
         const userInfo = await userInfoResponse.json();
-        
+
         const userLogged = {
           id: String(userInfo.id),
           name: `${userInfo.given_name} ${userInfo.family_name}`,
@@ -54,11 +62,9 @@ function AuthProvider({ children }: AuthProviderProps) {
           photo: userInfo.picture,
         };
 
-        console.log(userLogged); //remove this line in production environment
-
         setUser(userLogged);
 
-        await AsyncStorage.setItem(DATA_KEY, JSON.stringify(userLogged));
+        await AsyncStorage.setItem(USER_KEY, JSON.stringify(userLogged));
       }
     } catch (error: any) {
       throw new Error(error);
@@ -75,7 +81,6 @@ function AuthProvider({ children }: AuthProviderProps) {
       });
 
       if (credential) {
-        // console.log(credential); //remove this line in production environment
 
         const name = credential.fullName!.givenName!;
         // const photo = `https://ui-avatars.com/api/?name=${name}&length=1`;
@@ -87,23 +92,42 @@ function AuthProvider({ children }: AuthProviderProps) {
           photo: undefined,
         };
 
-        console.log(userLogged); //remove this line in production environment
-
         setUser(userLogged);
 
-        await AsyncStorage.setItem(DATA_KEY, JSON.stringify(userLogged));
+        await AsyncStorage.setItem(USER_KEY, JSON.stringify(userLogged));
       }
     } catch (error: any) {
       throw new Error(error);
     }
   }
 
+  async function loadUserStorageData() {
+    const userStorage = await AsyncStorage.getItem(USER_KEY);
+
+    if (userStorage) {
+      const userLogged = JSON.parse(userStorage) as User;
+      setUser(userLogged);
+    }
+
+    setLoadingUserStorage(false);
+  }
+
+  async function signOut() {
+    setUser({} as User);
+    await AsyncStorage.removeItem(USER_KEY);
+  }
+
+  useEffect(() => {
+    loadUserStorageData();
+  }, []);
+
   return (
     <AuthContext.Provider
       value={{
         user,
         signInWithGoogle,
-        signInWithApple
+        signInWithApple,
+        signOut,
       }}
     >
       {children}
