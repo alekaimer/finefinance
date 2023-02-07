@@ -8,7 +8,7 @@
       "**/*"
     ],
     "ios": {
-      "bundleIdentifier": "org.name.gofinance"
+      "bundleIdentifier": "org.alekaimer.gofinance"
     },
     "extra": {
       "eas": {
