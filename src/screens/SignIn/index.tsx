@@ -37,7 +37,7 @@ export function SignIn() {
       await signInWithApple();
     } catch (error: any) {
       Alert.alert(
-        "Não fo ipossivel fazer login com a conta Apple.",
+        "Não foi possivel fazer login com a conta Apple.",
         "Tente novamente em alguns instantes."
       );
     }
