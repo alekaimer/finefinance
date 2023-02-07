@@ -1,2 +1,3 @@
 export const DATA_KEY = "@gofinances:transactions";
-export const SET_CLEAR_DATA_BUTTON = true;
+export const USER_KEY = "@gofinances:users";
+export const SET_CLEAR_DATA_BUTTON = false;
