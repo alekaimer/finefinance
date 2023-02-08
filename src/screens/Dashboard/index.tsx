@@ -12,6 +12,7 @@ import { DATA_KEY, SET_CLEAR_DATA_BUTTON } from "../../config/consts";
 import { useAuth } from "../../hooks/auth";
 import { clearDataStorage } from "../../utils/clearDataStorage";
 import { formatCurrency } from "../../utils/formatCurrency";
+import defaultUserPhoto from "../../assets/userPhotoDefault.png";
 
 import {
   Container,
@@ -51,7 +52,7 @@ interface HighlightData {
 
 export function Dashboard() {
   const theme = useTheme();
-  const { signOut } = useAuth();
+  const { user, signOut } = useAuth();
 
   const [isLoading, setIsLoading] = useState(true);
   const [transactions, setTransactions] = useState<DataListProps[]>([]);
@@ -213,14 +214,12 @@ export function Dashboard() {
             <UserWrapper>
               <UserInfo>
                 <Photo
-                  source={{
-                    uri: "https://github.com/alekaimer.png",
-                  }}
+                  source={user.photo ? { uri: user.photo } : defaultUserPhoto}
                 />
 
                 <User>
                   <UserGreeting>Olá,</UserGreeting>
-                  <UserName>Alexandre</UserName>
+                  <UserName>{user.name }</UserName>
                 </User>
               </UserInfo>
 

@@ -48,6 +48,8 @@ export const Photo = styled.Image`
   border-radius: 10px;
   border-width: 2px;
   border-color: ${({ theme }) => theme.colors.background};
+
+  background-color: ${({ theme }) => theme.colors.black};
 `;
 
 export const User = styled.View`
