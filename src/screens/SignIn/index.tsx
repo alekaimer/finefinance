@@ -28,13 +28,12 @@ export function SignIn() {
   async function handleSignInWithGoogle() {
     try {
       setIsLoading(true);
-      return await signInWithGoogle();
+      await signInWithGoogle();
     } catch (error: any) {
       Alert.alert(
         "Não fo ipossivel fazer login com a conta Google.",
         "Tente novamente em alguns instantes."
       );
-    } finally {
       setIsLoading(false);
     }
   }
@@ -42,13 +41,12 @@ export function SignIn() {
   async function handleSignInWithApple() {
     try {
       setIsLoading(true);
-      return await signInWithApple();
+      await signInWithApple();
     } catch (error: any) {
       Alert.alert(
         "Não foi possivel fazer login com a conta Apple.",
         "Tente novamente em alguns instantes."
       );
-    } finally {
       setIsLoading(false);
     }
   }
