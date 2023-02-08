@@ -68,6 +68,12 @@ export const UserName = styled.Text`
   line-height: ${RFValue(24)}px;
 `;
 
+export const ButtonsWrapper = styled.View`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+`;
+
 export const LogoutButton = styled.TouchableOpacity`
   width: ${RFValue(32)}px;
   height: ${RFValue(32)}px;

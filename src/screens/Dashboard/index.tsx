@@ -30,6 +30,7 @@ import {
   LogoutButton,
   LoadContainer,
   EmptyList,
+  ButtonsWrapper
 } from "./styles";
 
 export interface DataListProps extends TransactionCardProps {
@@ -37,7 +38,7 @@ export interface DataListProps extends TransactionCardProps {
 }
 
 interface HighlightProps {
-  amount: string;
+  amount: number;
   lastTransaction: string;
   isExist: boolean;
 }
@@ -157,17 +158,17 @@ export function Dashboard() {
 
     setHighlightData({
       entries: {
-        amount: formatCurrency(entriesTotal),
+        amount: entriesTotal,
         lastTransaction: `${lastTransactionEntries}`,
         isExist: entriesTotal > 0,
       },
       expensive: {
-        amount: formatCurrency(expensiveTotal),
+        amount: expensiveTotal,
         lastTransaction: `${lastTransactionExpansives}`,
         isExist: expensiveTotal > 0,
       },
       total: {
-        amount: formatCurrency(entriesTotal - expensiveTotal),
+        amount: entriesTotal - expensiveTotal,
         lastTransaction: totalInterval,
         isExist: true,
       },
@@ -178,15 +179,15 @@ export function Dashboard() {
 
   function handleSignOut() {
     Alert.alert(
-      "Deslogar",
-      "Deseja sair do aplicativo?",
+      "Sair",
+      "Deseja realmente sair do aplicativo?",
       [
         {
           text: "Não",
           style: "cancel",
         },
         {
-          text: "Sim, Quero sair",
+          text: "Sim",
           onPress: () => signOut(),
         },
       ],
@@ -223,15 +224,16 @@ export function Dashboard() {
                 </User>
               </UserInfo>
 
-              {SET_CLEAR_DATA_BUTTON ? (
-                <LogoutButton onPress={clearDataStorage}>
-                  <Icon name="trash" />
-                </LogoutButton>
-              ) : (
+              <ButtonsWrapper>
+                {SET_CLEAR_DATA_BUTTON && (
+                  <LogoutButton onPress={clearDataStorage}>
+                    <Icon name="trash" />
+                  </LogoutButton>
+                )}
                 <LogoutButton onPress={handleSignOut}>
                   <Icon name="power" />
                 </LogoutButton>
-              )}
+              </ButtonsWrapper>
             </UserWrapper>
           </Header>
 
@@ -240,7 +242,7 @@ export function Dashboard() {
               <HighlightCard
                 type="up"
                 title="Entradas"
-                amount={highlightData.entries.amount}
+                amount={formatCurrency(highlightData.entries.amount)}
                 lastTransaction={`Última entrada dia ${highlightData.entries.lastTransaction}`}
               />
             )}
@@ -248,16 +250,18 @@ export function Dashboard() {
               <HighlightCard
                 type="down"
                 title="Saídas"
-                amount={highlightData.expensive.amount}
+                amount={formatCurrency(highlightData.expensive.amount)}
                 lastTransaction={`Última saída dia ${highlightData.expensive.lastTransaction}`}
               />
             )}
             <HighlightCard
               type="total"
               title="Total"
-              amount={highlightData.total?.amount || formatCurrency(0)}
+              amount={formatCurrency(highlightData.total?.amount)}
               lastTransaction={
-                highlightData.total?.lastTransaction || "Não há transações"
+                highlightData.total?.amount !== 0
+                  ? highlightData.total?.lastTransaction
+                  : "Não há transações"
               }
             />
           </HighlightCards>
