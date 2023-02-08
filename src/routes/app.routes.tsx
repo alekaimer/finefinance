@@ -5,13 +5,26 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { Dashboard } from "../screens/Dashboard";
 import { Register } from "../screens/Register";
 import { Summary } from "../screens/Summary";
+import { useAuth } from "../hooks/auth";
+import { ActivityIndicator, View } from "react-native";
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
 export function AppRoutes() {
   const theme = useTheme();
+  const { loadingUserStorage } = useAuth();
 
-  return (
+  return loadingUserStorage ? (
+    <View
+      style={{
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <ActivityIndicator color={theme.colors.primary} size="large" />
+    </View>
+  ) : (
     <Navigator
       screenOptions={{
         headerShown: false,
