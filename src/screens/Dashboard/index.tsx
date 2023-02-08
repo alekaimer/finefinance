@@ -8,7 +8,7 @@ import {
   TransactionCard,
   TransactionCardProps,
 } from "../../components/TransactionCard";
-import { DATA_KEY, SET_CLEAR_DATA_BUTTON } from "../../config/consts";
+import { DATA_KEY_BASE, SET_CLEAR_DATA_BUTTON } from "../../config/consts";
 import { useAuth } from "../../hooks/auth";
 import { clearDataStorage } from "../../utils/clearDataStorage";
 import { formatCurrency } from "../../utils/formatCurrency";
@@ -31,7 +31,7 @@ import {
   LogoutButton,
   LoadContainer,
   EmptyList,
-  ButtonsWrapper
+  ButtonsWrapper,
 } from "./styles";
 
 export interface DataListProps extends TransactionCardProps {
@@ -105,7 +105,9 @@ export function Dashboard() {
   }
 
   async function loadTransactions() {
-    const response = await AsyncStorage.getItem(DATA_KEY);
+    const response = await AsyncStorage.getItem(
+      `${DATA_KEY_BASE}_user:${user.id}`
+    );
     const transactions = response ? JSON.parse(response) : [];
 
     let entriesTotal = 0;
@@ -219,13 +221,13 @@ export function Dashboard() {
 
                 <User>
                   <UserGreeting>Olá,</UserGreeting>
-                  <UserName>{user.name }</UserName>
+                  <UserName>{user.name}</UserName>
                 </User>
               </UserInfo>
 
               <ButtonsWrapper>
                 {SET_CLEAR_DATA_BUTTON && (
-                  <LogoutButton onPress={clearDataStorage}>
+                  <LogoutButton onPress={() => clearDataStorage(user.id)}>
                     <Icon name="trash" />
                   </LogoutButton>
                 )}

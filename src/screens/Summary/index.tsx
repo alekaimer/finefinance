@@ -4,7 +4,7 @@ import { useCallback, useState } from "react";
 import { ActivityIndicator, FlatList } from "react-native";
 import { useTheme } from "styled-components/native";
 import { HistoryCard } from "../../components/HistoryCard";
-import { DATA_KEY } from "../../config/consts";
+import { DATA_KEY_BASE } from "../../config/consts";
 import { categories } from "../../utils/categories";
 import { DataListProps } from "../Dashboard";
 import {
@@ -22,6 +22,7 @@ import { RFValue } from "react-native-responsive-fontsize";
 import { addMonths, subMonths } from "date-fns";
 import { format } from "date-fns/esm";
 import { ptBR } from "date-fns/locale";
+import { useAuth } from "../../hooks/auth";
 
 interface TotalByCategoryProps {
   key: string;
@@ -34,6 +35,7 @@ interface TotalByCategoryProps {
 
 export function Summary() {
   const theme = useTheme();
+  const { user } = useAuth();
 
   const [isLoading, setIsLoading] = useState(true);
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -52,7 +54,7 @@ export function Summary() {
   const loadTransactions = async () => {
     setIsLoading(true);
 
-    const response = await AsyncStorage.getItem(DATA_KEY);
+    const response = await AsyncStorage.getItem(`${DATA_KEY_BASE}_user:${user.id}`);
     const transactions: DataListProps[] = response ? JSON.parse(response) : [];
 
     const expensives = transactions.filter(

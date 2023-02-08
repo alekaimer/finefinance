@@ -19,13 +19,15 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import uuid from "react-native-uuid";
 import { useNavigation } from "@react-navigation/native";
-import { DATA_KEY } from "../../config/consts"
+import { DATA_KEY_BASE } from "../../config/consts"
+import { useAuth } from "../../hooks/auth";
 interface FormData {
   [key: string]: string;
 }
 
 export function Register() {
   const { navigate } = useNavigation();
+  const { user } = useAuth();
 
   const [category, setCategory] = useState({
     key: "category",
@@ -93,12 +95,12 @@ export function Register() {
     };
 
     try {
-      const data = await AsyncStorage.getItem(DATA_KEY);
+      const data = await AsyncStorage.getItem(`${DATA_KEY_BASE}_user:${user.id}`);
       const currentData = data ? JSON.parse(data) : [];
 
       const dataFormatted = [...currentData, newTransaction];
 
-      await AsyncStorage.setItem(DATA_KEY, JSON.stringify(dataFormatted));
+      await AsyncStorage.setItem(`${DATA_KEY_BASE}_user:${user.id}`, JSON.stringify(dataFormatted));
 
       clearForm();
 
