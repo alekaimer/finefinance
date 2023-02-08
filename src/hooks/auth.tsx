@@ -26,6 +26,7 @@ interface AuthContextData {
   signInWithGoogle(): Promise<void>;
   signInWithApple(): Promise<void>;
   signOut(): Promise<void>;
+  loadingUserStorage: boolean;
 }
 
 const AuthContext = createContext({} as AuthContextData);
@@ -128,6 +129,7 @@ function AuthProvider({ children }: AuthProviderProps) {
         signInWithGoogle,
         signInWithApple,
         signOut,
+        loadingUserStorage
       }}
     >
       {children}
@@ -137,6 +139,11 @@ function AuthProvider({ children }: AuthProviderProps) {
 
 function useAuth() {
   const context = useContext(AuthContext);
+
+  if (!context) {
+    throw new Error('useAuth must be used inside AuthProvider');
+  }
+  
   return context;
 }
 
