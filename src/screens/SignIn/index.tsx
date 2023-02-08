@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import {
   Container,
   Title,
@@ -16,30 +16,40 @@ import LogoSvg from "../../assets/logo.svg";
 import { RFValue } from "react-native-responsive-fontsize";
 import { SignInSocialButton } from "../../components/SignInSocialButton";
 import { useAuth } from "../../hooks/auth";
-import { Alert } from "react-native";
+import { ActivityIndicator, Alert } from "react-native";
+import { useTheme } from "styled-components/native";
 
 export function SignIn() {
+  const theme = useTheme();
   const { signInWithGoogle, signInWithApple } = useAuth();
+
+  const [isLoading, setIsLoading] = useState(false);
 
   async function handleSignInWithGoogle() {
     try {
-      await signInWithGoogle();
+      setIsLoading(true);
+      return await signInWithGoogle();
     } catch (error: any) {
       Alert.alert(
         "Não fo ipossivel fazer login com a conta Google.",
         "Tente novamente em alguns instantes."
       );
+    } finally {
+      setIsLoading(false);
     }
   }
 
   async function handleSignInWithApple() {
     try {
-      await signInWithApple();
+      setIsLoading(true);
+      return await signInWithApple();
     } catch (error: any) {
       Alert.alert(
         "Não foi possivel fazer login com a conta Apple.",
         "Tente novamente em alguns instantes."
       );
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -76,6 +86,16 @@ export function SignIn() {
             onPress={handleSignInWithApple}
           />
         </FooterWrapper>
+
+        {isLoading && (
+          <ActivityIndicator
+            color={theme.colors.shape}
+            style={{
+              marginTop: 20,
+            }}
+            size="large"
+          />
+        )}
       </Footer>
     </Container>
   );
