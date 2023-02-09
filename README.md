@@ -17,6 +17,12 @@ npm install --global eas-cli
 eas build -p android --profile preview
 ```
 
-# API
+Testes:
+```
+yarn test
+```
 
-https://github.com/a2softhouse/gym-api
+Desenvolvimento com testes:
+```
+yarn test:w
+```
