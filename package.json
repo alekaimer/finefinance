@@ -9,7 +9,9 @@
     "ios": "expo run:ios",
     "web": "expo start --web",
     "test": "jest",
-    "test:w": "jest --watch"
+    "test:w": "jest --watchAll",
+    "test:wo": "jest --watch",
+    "test:coverage": "jest --coverage"
   },
   "dependencies": {
     "@expo-google-fonts/poppins": "^0.2.2",
@@ -31,7 +33,7 @@
     "expo-splash-screen": "~0.17.5",
     "expo-status-bar": "~1.4.2",
     "intl": "^1.2.5",
-    "jest": "^26.6.3",
+    "jest": "27",
     "jest-expo": "^47.0.1",
     "react": "18.1.0",
     "react-hook-form": "^7.42.1",
@@ -51,11 +53,14 @@
   "devDependencies": {
     "@babel/core": "^7.12.9",
     "@testing-library/jest-native": "^5.4.1",
+    "@testing-library/react-hooks": "^8.0.1",
     "@testing-library/react-native": "^11.5.2",
     "@types/jest": "^29.4.0",
     "@types/styled-components-react-native": "^5.2.1",
+    "jest-fetch-mock": "^3.0.3",
     "jest-styled-components": "^7.1.1",
-    "react-native-svg-transformer": "^1.0.0"
+    "react-native-svg-transformer": "^1.0.0",
+    "ts-jest": "27"
   },
   "private": true
 }

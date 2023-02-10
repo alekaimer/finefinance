@@ -1,28 +1,41 @@
-# Instalation
+# Go Finance (v1.0.0)
 
-Para instalar o Expo CLI:
+## Para instalar o Expo CLI:
 
 ```
 npm install --global expo-cli
 ```
 
-Desenvolvimento:
+## Ambiente de desenvolvimento:
 ```
 yarn start
 ```
 
-Para build do app:
+## Build:
 ```
 npm install --global eas-cli
 eas build -p android --profile preview
 ```
 
-Testes:
+## Testes unitários:
 ```
 yarn test
 ```
 
-Desenvolvimento com testes:
+## Desenvolvimento com testes:
+
+##### Todos os testes no modo watchAll
 ```
 yarn test:w
 ```
+
+##### Testes no modo watch (apenas em arquivos com alterações )
+```
+yarn test:wo
+```
+
+## Relatório de cobertura de teste:
+```
+yarn test:wo
+```
+

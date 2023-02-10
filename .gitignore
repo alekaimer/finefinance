@@ -57,3 +57,6 @@ dist/
 
 # Configs
 .env
+
+# Tests
+coverage/

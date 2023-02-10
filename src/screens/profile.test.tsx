@@ -1,6 +1,6 @@
 import React from "react";
 import { render } from "@testing-library/react-native";
-import { Profile } from "../../screens/Profile";
+import { Profile } from "./Profile";
 
 describe("Profile Screen", () => {
   // it("Should render Profile screen", () => {

@@ -1,7 +1,7 @@
 import React from "react";
 import { render } from "@testing-library/react-native";
 
-import { Input } from "./";
+import { Input } from ".";
 import { ThemeProvider } from "styled-components/native";
 import theme from "../../../global/styles/theme";
 
