@@ -149,6 +149,11 @@ android {
         versionName "1.0"
         buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
 
+        //Detox
+        // testBuildType System.getenv("TEST_BUILD_TYPE") ?: "debug"
+        testBuildType System.setProperty("testBuildType", "debug")
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
         if (isNewArchitectureEnabled()) {
             // We configure the CMake build only if you decide to opt-in for the New Architecture.
             externalNativeBuild {
@@ -235,6 +240,7 @@ android {
             signingConfig signingConfigs.debug
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            proguardFile "${rootProject.projectDir}/../node_modules/detox/android/detox/proguard-rules-app.pro"
         }
     }
 
@@ -284,6 +290,12 @@ dependencies {
     def isWebpEnabled = (findProperty('expo.webp.enabled') ?: "") == "true";
     def isWebpAnimatedEnabled = (findProperty('expo.webp.animated') ?: "") == "true";
     def frescoVersion = rootProject.ext.frescoVersion
+
+    //Detox
+    // androidTestImplementation("com.wix:detox:+", { transtive = true })
+    // androidTestImplementation "junit:junit:4.12"
+    androidTestImplementation('com.wix:detox:+')
+    implementation 'androidx.appcompat:appcompat:1.1.0'
 
     // If your app supports Android versions before Ice Cream Sandwich (API level 14)
     if (isGifEnabled || isWebpEnabled) {
