@@ -1,4 +1,5 @@
 import React from "react";
+import { ViewProps } from "react-native";
 import {
   Container,
   Header,
@@ -9,7 +10,7 @@ import {
   Icon,
 } from "./styles";
 
-export interface HighlightCardProps {
+export interface HighlightCardProps extends ViewProps {
   type: "up" | "down" | "total";
   title: string;
   amount: string;
@@ -27,9 +28,10 @@ export function HighlightCard({
   title,
   amount,
   lastTransaction,
+  ...props
 }: HighlightCardProps) {
   return (
-    <Container type={type}>
+    <Container type={type} {...props}>
       <Header>
         <Title type={type}>{title}</Title>
         <Icon name={icon[type]} type={type} />
