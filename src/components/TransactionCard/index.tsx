@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { ViewProps } from "react-native";
 import { categories } from "../../utils/categories";
 import {
   Container,
@@ -19,17 +20,15 @@ export interface TransactionCardProps {
   date: string;
 }
 
-interface Props {
+interface Props extends ViewProps {
   data: TransactionCardProps;
 }
 
-export function TransactionCard({ data }: Props) {
-  const [ category ] = categories.filter(
-    item => item.key === data.category
-  );
+export function TransactionCard({ data, ...props }: Props) {
+  const [category] = categories.filter((item) => item.key === data.category);
 
   return (
-    <Container type={data.type}>
+    <Container type={data.type} {...props}>
       <Title>{data.name}</Title>
 
       <Amount type={data.type}>
