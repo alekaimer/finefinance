@@ -105,7 +105,7 @@ export function Register() {
       clearForm();
 
       //@ts-ignore
-      navigate("Listagem");
+      navigate("Dashboard");
     } catch (error) {
       Alert.alert("Não foi possível salvar");
     }
