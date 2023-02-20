@@ -16,7 +16,7 @@ export const Container = styled.View`
 
 export const Header = styled.View`
   width: 100%;
-  height: ${RFPercentage(42)}px;
+  height: ${RFPercentage(32)}px;
   flex-direction: row;
 
   align-items: flex-start;
@@ -96,7 +96,8 @@ export const HighlightCards = styled.ScrollView.attrs({
 })`
   width: 100%;
   position: absolute;
-  margin-top: ${RFPercentage(20)}px;
+  margin-top: ${RFPercentage(19)}px;
+  /* margin-top: ${RFValue(130)}px; */
 `;
 
 export const Transactions = styled.View`

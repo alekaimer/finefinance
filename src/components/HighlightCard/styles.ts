@@ -3,15 +3,15 @@ import styled, { css } from "styled-components/native";
 import { Feather } from "@expo/vector-icons";
 import { HighlightCardProps } from ".";
 
-export const Container = styled.View<Pick<HighlightCardProps, "type">>`
+export const Container = styled.View<Pick<HighlightCardProps, "type">>` 
   width: ${RFValue(300)}px;
   justify-content: space-between;
   background-color: ${({ theme, type }) =>
     type === "total" ? theme.colors.secondary : theme.colors.shape};
   border-radius: 5px;
 
-  padding: 18px 24px;
-  padding-bottom: ${RFValue(42)}px;
+  padding: 18px;
+  padding-bottom: ${RFValue(24)}px;
   margin-right: 16px;
 
   /* shadow */
@@ -58,7 +58,7 @@ export const Icon = styled(Feather)<Pick<HighlightCardProps, "type">>`
 `;
 
 export const Footer = styled.View`
-  margin-top: ${RFValue(38)}px;
+  /* margin-top: ${RFValue(38)}px; */
 `;
 
 export const Amount = styled.Text<Pick<HighlightCardProps, "type">>`
